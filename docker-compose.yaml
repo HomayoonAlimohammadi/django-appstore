@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  web:
+    build: .
+    command: gunicorn django_appstore_project.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/app 
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: appstore_db
+      POSTGRES_USER: appstore_user
+      POSTGRES_PASSWORD: appstore_pass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data:
+
