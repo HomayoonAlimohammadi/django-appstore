@@ -8,6 +8,7 @@ from ..models import App
 
 User = get_user_model()
 
+
 class AppCreationAPITest(APITestCase):
     """
     Test suite for the app creation API endpoint.
@@ -17,20 +18,16 @@ class AppCreationAPITest(APITestCase):
         """
         Set up a test user and log in.
         """
-        self.user = User.objects.create_user(username='testuser', password='testpass')
+        self.user = User.objects.create_user(username="testuser", password="testpass")
         self.client.force_authenticate(user=self.user)
-        self.create_url: str = reverse('app-create')
+        self.create_url: str = reverse("app-create")
 
     def test_create_app_success(self) -> None:
         """
         Test that an authenticated user can successfully create an app.
         """
-        payload: Dict[str, Any] = {
-            'title': 'Test App',
-            'description': 'A sample test app',
-            'price': '9.99'
-        }
-        response = self.client.post(self.create_url, data=payload, format='json')
+        payload: Dict[str, Any] = {"title": "Test App", "description": "A sample test app", "price": "9.99"}
+        response = self.client.post(self.create_url, data=payload, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(App.objects.count(), 1)
         app_instance = App.objects.first()
@@ -43,10 +40,6 @@ class AppCreationAPITest(APITestCase):
         Test that an unauthenticated user cannot create an app.
         """
         self.client.logout()
-        payload: Dict[str, Any] = {
-            'title': 'Test App',
-            'description': 'A sample test app',
-            'price': '9.99'
-        }
-        response = self.client.post(self.create_url, data=payload, format='json')
+        payload: Dict[str, Any] = {"title": "Test App", "description": "A sample test app", "price": "9.99"}
+        response = self.client.post(self.create_url, data=payload, format="json")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)

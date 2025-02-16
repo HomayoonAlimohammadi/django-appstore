@@ -1,0 +1,11 @@
+[tool.black]
+line-length = 120
+exclude = '''
+/(
+    migrations
+  | env
+  | __pycache__
+  | build
+  | dist
+)/
+'''

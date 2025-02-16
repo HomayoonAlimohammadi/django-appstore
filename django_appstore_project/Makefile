@@ -23,3 +23,7 @@ test-docker: ## Run Django tests.
 	@echo "Running tests inside Docker container..."
 	docker compose exec web python manage.py test
 	
+lint: ## Run linters.
+	@echo "Running linters..."
+	flake8 .
+	black --check .

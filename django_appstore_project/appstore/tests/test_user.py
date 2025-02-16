@@ -17,13 +17,9 @@ class UserAuthTests(APITestCase):
         """
         Test that a new user is created via the signup endpoint.
         """
-        url: str = reverse('signup')
-        data: Dict[str, Any] = {
-            "username": "newuser",
-            "email": "newuser@example.com",
-            "password": "newpassword123"
-        }
-        response = self.client.post(url, data, format='json')
+        url: str = reverse("signup")
+        data: Dict[str, Any] = {"username": "newuser", "email": "newuser@example.com", "password": "newpassword123"}
+        response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertTrue(User.objects.filter(username="newuser").exists())
 
@@ -31,14 +27,9 @@ class UserAuthTests(APITestCase):
         """
         Test that valid login credentials return an authentication token.
         """
-        User.objects.create_user(
-            username="testuser", email="test@example.com", password="testpassword"
-        )
-        url: str = reverse('login')
-        data: Dict[str, Any] = {
-            "username": "testuser",
-            "password": "testpassword"
-        }
-        response = self.client.post(url, data, format='json')
+        User.objects.create_user(username="testuser", email="test@example.com", password="testpassword")
+        url: str = reverse("login")
+        data: Dict[str, Any] = {"username": "testuser", "password": "testpassword"}
+        response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn('token', response.data)
+        self.assertIn("token", response.data)
