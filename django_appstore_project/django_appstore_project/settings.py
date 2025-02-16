@@ -77,11 +77,14 @@ WSGI_APPLICATION = 'django_appstore_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'appstore_db',
+        'USER': 'appstore_user',
+        'PASSWORD': 'appstore_pass',
+        'HOST': 'db',  # Matches the service name in docker-compose.yml
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
