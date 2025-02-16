@@ -26,7 +26,7 @@ jobs:
 
       - name: Run Django Tests
         run: |
-          python manage.py test
+          python django_appstore_project/manage.py test
 
   lint:
     runs-on: ubuntu-latest
