@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -78,11 +79,11 @@ WSGI_APPLICATION = 'django_appstore_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'appstore_db',
-        'USER': 'appstore_user',
-        'PASSWORD': 'appstore_pass',
-        'HOST': 'db',  # Matches the service name in docker-compose.yml
-        'PORT': '5432',
+        'NAME': os.environ.get('POSTGRES_DB', 'appstore_db'),
+        'USER': os.environ.get('POSTGRES_USER', 'appstore_user'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'appstore_pass'),
+        'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
+        'PORT': os.environ.get('POSTGRES_PORT', '5432'),
     }
 }
 

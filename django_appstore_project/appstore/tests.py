@@ -52,7 +52,7 @@ class AppCreationAPITest(APITestCase):
             'price': '9.99'
         }
         response = self.client.post(self.create_url, data=payload, format='json')
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
 
 class AdminVerificationTest(TestCase):
