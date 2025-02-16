@@ -18,7 +18,7 @@ class AppCreationAPITest(APITestCase):
         Set up a test user and log in.
         """
         self.user = User.objects.create_user(username='testuser', password='testpass')
-        self.client.login(username='testuser', password='testpass')
+        self.client.force_authenticate(user=self.user)
         self.create_url: str = reverse('app-create')
 
     def test_create_app_success(self) -> None:
@@ -49,4 +49,4 @@ class AppCreationAPITest(APITestCase):
             'price': '9.99'
         }
         response = self.client.post(self.create_url, data=payload, format='json')
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)

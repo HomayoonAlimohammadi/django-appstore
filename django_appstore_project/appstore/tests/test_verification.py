@@ -45,9 +45,7 @@ class AdminVerificationTest(TestCase):
         site: AdminSite = AdminSite()
         app_admin: AppAdmin = AppAdmin(App, site)
         queryset = App.objects.filter(id__in=[self.app1.id, self.app2.id])
-        # Simulate calling the admin action; request is not used so we pass None.
         verify_apps(app_admin, None, queryset)
-        # Refresh the instances from the database.
         self.app1.refresh_from_db()
         self.app2.refresh_from_db()
         self.assertTrue(self.app1.is_verified)

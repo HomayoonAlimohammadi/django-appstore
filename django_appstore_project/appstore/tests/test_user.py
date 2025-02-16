@@ -31,7 +31,6 @@ class UserAuthTests(APITestCase):
         """
         Test that valid login credentials return an authentication token.
         """
-        # Create a test user first
         User.objects.create_user(
             username="testuser", email="test@example.com", password="testpassword"
         )
@@ -42,5 +41,4 @@ class UserAuthTests(APITestCase):
         }
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # Check that the response contains a token
         self.assertIn('token', response.data)
