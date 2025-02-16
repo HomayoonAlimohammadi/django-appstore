@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "rest_framework",
+    'rest_framework.authtoken',
     "appstore",
 ]
 
@@ -76,16 +77,25 @@ WSGI_APPLICATION = 'django_appstore_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('POSTGRES_DB', 'appstore_db'),
-        'USER': os.environ.get('POSTGRES_USER', 'appstore_user'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'appstore_pass'),
-        'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
-        'PORT': os.environ.get('POSTGRES_PORT', '5432'),
+DEV_MODE = os.environ.get('DEV_MODE', 'True') == 'True'
+if DEV_MODE:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('POSTGRES_DB', 'appstore_db'),
+            'USER': os.environ.get('POSTGRES_USER', 'appstore_user'),
+            'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'appstore_pass'),
+            'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
+            'PORT': os.environ.get('POSTGRES_PORT', '5432'),
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
